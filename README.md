@@ -29,7 +29,7 @@ Due to confusion with the pinouts in the documentation of the above boards, the 
 ### This repo, as it currently stands, contains two pieces of software:
 
 - A basic Arduino sketch that interfaces with the GPS module via the ESP32 fork of TinyGPSPlus and uses the Arduino WiFi libray to scan WiFi networks. The sketch will repeatedly output a line of CSV data over USB Serial detailing the current GPS location, date, time, and a list of WiFi SSIDs. 
-- Asimple python script that records the data received from the ESP32 over USB Serial and writes it to a CSV file. 
+- A simple python script that records the data received from the ESP32 over USB Serial and writes it to a CSV file. 
 
 Once the hardware issues detailed above are resolved, an Arduino sketch will be available that will write the CSV file locally on the ESP32 onto a microSD.
 
@@ -37,7 +37,7 @@ Once the hardware issues detailed above are resolved, an Arduino sketch will be 
 
 The `ministumbler_kicad` directory contains a KiCad project with the designs for a flex PCB breakout designed to connect all three boards, GPS, ESP32, and microSD, via one small and flexible PCB so that the entire system may be concealed within a bag or clothes pocket or sewn into clothing or a bag's lining. When the first manufactured prototypes of this board have been received, this page will be update. 
 
-To open this project in KiCad, clone this repo or download the `ministumbler_kicad` director and open the `ministumbler.kicad_pro` file from inside KiCad's GUI. 
+To open this project in KiCad, clone this repo or download the `ministumbler_kicad` directory and open the `ministumbler.kicad_pro` file from inside KiCad's GUI. 
 
 
 
