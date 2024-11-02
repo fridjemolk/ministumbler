@@ -33,5 +33,11 @@ Due to confusion with the pinouts in the documentation of the above boards, the 
 
 Once the hardware issues detailed above are resolved, an Arduino sketch will be available that will write the CSV file locally on the ESP32 onto a microSD.
 
+## KiCad Project
+
+The `warwalker` directory contains a KiCad project with the designs for a flex PCB breakout designed to connect all three boards, GPS, ESP32, and microSD, via one small and flexible PCB so that the entire system may be concealed within a bag or clothes pocket or sewn into clothing or a bag's lining. When the first manufactured prototypes of this board have been received, this page will be update. 
+
+To open this project in KiCad, clone this repo or donwload the `warwalker` director and open the `warwalker.kicad_pro` file from inside KiCad's GUI. 
+
 
 
