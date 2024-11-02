@@ -35,9 +35,9 @@ Once the hardware issues detailed above are resolved, an Arduino sketch will be 
 
 ## KiCad Project
 
-The `warwalker` directory contains a KiCad project with the designs for a flex PCB breakout designed to connect all three boards, GPS, ESP32, and microSD, via one small and flexible PCB so that the entire system may be concealed within a bag or clothes pocket or sewn into clothing or a bag's lining. When the first manufactured prototypes of this board have been received, this page will be update. 
+The `ministumbler_kicad` directory contains a KiCad project with the designs for a flex PCB breakout designed to connect all three boards, GPS, ESP32, and microSD, via one small and flexible PCB so that the entire system may be concealed within a bag or clothes pocket or sewn into clothing or a bag's lining. When the first manufactured prototypes of this board have been received, this page will be update. 
 
-To open this project in KiCad, clone this repo or donwload the `warwalker` director and open the `warwalker.kicad_pro` file from inside KiCad's GUI. 
+To open this project in KiCad, clone this repo or download the `ministumbler_kicad` director and open the `ministumbler.kicad_pro` file from inside KiCad's GUI. 
 
 
 
