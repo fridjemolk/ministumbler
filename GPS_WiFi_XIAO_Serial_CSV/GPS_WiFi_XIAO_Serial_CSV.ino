@@ -12,7 +12,7 @@
 #include <SoftwareSerial.h>
 
 /*
-Includes some code inspired by: https://github.com/dkyazzentwatwa/esp32-gps-wifi-wigle/blob/main/esp32-gps-wifi-wigle.ino
+Includes some code inspired by and modified from: https://github.com/dkyazzentwatwa/esp32-gps-wifi-wigle/blob/main/esp32-gps-wifi-wigle.ino
 */
 static const int RXPin = D7, TXPin = D6;
 static const uint32_t GPSBaud = 9600;
