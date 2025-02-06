@@ -1,16 +1,23 @@
 #include <WiFi.h>
-#include <WiFiAP.h>
-#include <WiFiClient.h>
-#include <WiFiGeneric.h>
-#include <WiFiMulti.h>
-#include <WiFiScan.h>
-#include <WiFiServer.h>
-#include <WiFiSTA.h>
-#include <WiFiType.h>
-#include <WiFiUdp.h>
+//#include <WiFiAP.h>
+//#include <WiFiClient.h>
+//#include <WiFiGeneric.h>
+//#include <WiFiMulti.h>
+//#include <WiFiScan.h>
+//#include <WiFiServer.h>
+//#include <WiFiSTA.h>
+//#include <WiFiType.h>
+//#include <WiFiUdp.h>
 #include <TinyGPSPlus.h>
 #include <SoftwareSerial.h>
+#include <SPI.h>
+#include "SdFat.h"
+SdFat SD;
 
+#define SD_FAT_TYPE 3
+#define SD_CS_PIN A1
+
+File csv;
 /*
 Includes some code inspired by and modified from: https://github.com/dkyazzentwatwa/esp32-gps-wifi-wigle/blob/main/esp32-gps-wifi-wigle.ino
 */
@@ -32,6 +39,17 @@ void setup()
 {
   Serial.begin(115200);
   ss.begin(GPSBaud);
+
+  Serial.print("Initializing SD card...");
+
+  if (!SD.begin(SD_CS_PIN)) {
+    Serial.println("initialization failed!");
+    return;
+  }
+  Serial.println("initialization done.");
+
+  //open the file
+  csv = SD.open("ministumbler.csv", FILE_WRITE);
 
   // initialize digital pin LED_BUILTIN as an output.
   pinMode(LED_BUILTIN, OUTPUT);
@@ -73,6 +91,39 @@ void setup()
   Serial.print(F(","));
   Serial.println("");
 
+  if(csv){
+    csv.print("Latitude");
+    csv.print(F(","));
+    csv.print("Longitude");
+    csv.print(F(","));
+    csv.print("Month");
+    csv.print(F(","));
+    csv.print("Day");
+    csv.print(F(","));
+    csv.print("Year");
+    csv.print(F(","));
+    csv.print("Hour");
+    csv.print(F(","));
+    csv.print("Minute");
+    csv.print(F(","));
+    csv.print("Second");
+    csv.print(F(","));
+    csv.print("Centisecond");
+    csv.print(F(","));
+    csv.print("Scan Count");
+    csv.print(F(","));
+    csv.print("Network Count");
+    csv.print(F(","));
+    csv.print("SSID");
+    csv.print(F(","));
+    csv.print("RSSI");
+    csv.print(F(","));
+    csv.print("MAC");
+    csv.print(F(","));
+    csv.println("");
+    csv.flush();
+  }
+
 }
 
 void loop(){
@@ -80,6 +131,7 @@ void loop(){
   while (ss.available() > 0){
     if (gps.encode(ss.read()) && gps.location.isValid() && gps.date.isValid() && gps.time.isValid()){
       scanWiFiNetworks();
+      csv.flush();
       digitalWrite(LED_BUILTIN, HIGH);
     } else {
       digitalWrite(LED_BUILTIN, LOW);
@@ -124,12 +176,68 @@ void printGPS(){
   Serial.print(F(","));
 }
 
+void writeGPS(){
+  if (gps.location.isValid())
+  {
+    csv.print(gps.location.lat(), 6);
+    csv.print(F(","));
+    csv.print(gps.location.lng(), 6);
+    csv.print(F(","));
+  }
+
+  if (gps.date.isValid())
+  {
+    csv.print(gps.date.month());
+    csv.print(F(","));
+    csv.print(gps.date.day());
+    csv.print(F(","));
+    csv.print(gps.date.year());
+    csv.print(F(","));
+  }
+  
+  if (gps.time.isValid())
+  {
+    if (gps.time.hour() < 10) Serial.print(F("0"));
+    csv.print(gps.time.hour());
+    csv.print(F(","));
+    if (gps.time.minute() < 10) Serial.print(F("0"));
+    csv.print(gps.time.minute());
+    csv.print(F(","));
+    if (gps.time.second() < 10) Serial.print(F("0"));
+    csv.print(gps.time.second());
+    csv.print(F(","));
+    if (gps.time.centisecond() < 10) Serial.print(F("0"));
+    csv.print(gps.time.centisecond());
+  }
+  csv.print(F(","));
+}
+
 // Scan for WiFi networks and store results in the CSV file
+//Function modified from: https://github.com/dkyazzentwatwa/esp32-gps-wifi-wigle/blob/main/esp32-gps-wifi-wigle.ino
 void scanWiFiNetworks() {
+  if(csv){
+    writeGPS();
+  }
   printGPS();
   networkCount = WiFi.scanNetworks(); // Scan for WiFi networks
   scanCount++; // Increment scan count
-  
+
+  if(csv){
+    // Print networks to SD card CSV file
+    csv.print(scanCount);
+    csv.print(F(","));
+    csv.print(networkCount);
+    csv.print(F(","));
+    for (int i = 0; i < networkCount; ++i) {
+      csv.print(WiFi.SSID(i));
+      csv.print(F(","));
+      csv.print(WiFi.RSSI(i));
+      csv.print(F(","));
+      //csv.print(WiFi.macAddress());
+    }
+    csv.println("");
+  }
+
   // Print networks to serial monitor
   Serial.print(scanCount);
   Serial.print(F(","));
