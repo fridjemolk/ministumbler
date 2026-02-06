@@ -16,7 +16,9 @@ As of 02/2026, this project exists in 3 different hardware configurations, all o
 #### v0: A soldered-together stack of all three modules into a very compact rough cube shape. This was the initial prototype and is a little awkward to assemble as it requires deliberately not soldering certain pins for each module. 
 ![photo_2024-10-22_11-17-53](https://github.com/user-attachments/assets/c75c636c-1c94-47f4-addd-2b2b55e19a51)
 
-All three hardware versions use the same firmware, with the same pin configurations, requireing the TX jumper pad to be **CUT** on the SD module and the A1 jumper pad **SOLDERED**. This firmware builds off the firmware created by [lozaning](https://github.com/lozaning) for their [Wifydra Project](https://github.com/lozaning/The_Wifydra), so credit to them for all their hard work in supporting the WiGLE CSV format and handling SD card file creation and management. 
+All three hardware versions currently [use the same firmware](https://github.com/fridjemolk/ministumbler/blob/master/Ministumbler_WiGLE/Ministumbler_WiGLE.ino), with the same pin configurations, requireing the TX jumper pad to be **CUT** on the SD module and the A1 jumper pad **SOLDERED**. This firmware builds off the firmware created by [lozaning](https://github.com/lozaning) for their [Wifydra Project](https://github.com/lozaning/The_Wifydra), so credit to them for all their hard work in supporting the WiGLE CSV format and handling SD card file creation and management. 
+
+[As of 02/2026, this is the main firmware used for this project](https://github.com/fridjemolk/ministumbler/blob/master/Ministumbler_WiGLE/Ministumbler_WiGLE.ino)
 
 ### Required Hardware
 
