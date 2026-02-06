@@ -16,7 +16,7 @@ As of 02/2026, this project exists in 3 different hardware configurations, all o
 #### v0: A soldered-together stack of all three modules into a very compact rough cube shape. This was the initial prototype and is a little awkward to assemble as it requires deliberately not soldering certain pins for each module. 
 ![photo_2024-10-22_11-17-53](https://github.com/user-attachments/assets/c75c636c-1c94-47f4-addd-2b2b55e19a51)
 
-All three hardware versions use the same firmware, with the same pin configurations, requireing the TX jumper pad to be CUT on the SD module and the A1 jumper pad SOLDERED. This firmware builds off the firmware created by [lozaning](https://github.com/lozaning) for their [Wifydra Project](https://github.com/lozaning/The_Wifydra), so credit to them for all their hard work in supporting the WiGLE CSV format and handling SD card file creation and management. 
+All three hardware versions use the same firmware, with the same pin configurations, requireing the TX jumper pad to be **CUT** on the SD module and the A1 jumper pad **SOLDERED**. This firmware builds off the firmware created by [lozaning](https://github.com/lozaning) for their [Wifydra Project](https://github.com/lozaning/The_Wifydra), so credit to them for all their hard work in supporting the WiGLE CSV format and handling SD card file creation and management. 
 
 ### Required Hardware
 
@@ -26,7 +26,7 @@ All three hardware versions use the same firmware, with the same pin configurati
 - [L76K GNSS Module for SeeedStudio XIAO.](https://wiki.seeedstudio.com/get_start_l76k_gnss/) A low-cost, TinyGPS++ compatible GPS module that has proven easy to use and quick to lock. Includes an active GPS antenna, also connected via a U.Fl connector
 - [Adafruit microSD Card BFF.](https://learn.adafruit.com/adafruit-microsd-card-bff) A basic microSD card breakout board from adafruit that directly connects an insterted microSD to the SPI pins on the ESP32S3. Since the ESP32S3 has an on-board 3.3v regulator and runs at a 3.3v logic level there is no need for any regulator or level shifter to interface with a microSD card.
 
-The v0 hardware design leads to an issue with the GPS RESET pin being the same as the MOSI (D10) pin of the ESP32, which is used to communicate with the microSD card. It is therefor required to ensure that this pin from the ESP32 connects only to the SD board, as the GPS RESET pin is not needed. In fact, the GPS module only requires it's RX, TX, 5V, GND, and 3v3 pins to actually be connected to the ESP32. The 5V pin can also be omitted to disabled the green GPS PPS LED if required.
+The v0 hardware design leads to an issue with the GPS RESET pin being the same as the MOSI (D10) pin of the ESP32, which is used to communicate with the microSD card. For the **v0 configuration ONLY** it is therefore required to ensure that this pin from the ESP32 connects only to the SD board, as the GPS RESET pin is not needed. In fact, the GPS module only requires it's RX, TX, 5V, GND, and 3v3 pins to actually be connected to the ESP32. The 5V pin can also be omitted to disabled the green GPS PPS LED if required.
 
 ## Software
 
