@@ -34,7 +34,7 @@ The v0 hardware design leads to an issue with the GPS RESET pin being the same a
 
 ### This repo, as it currently stands, contains three pieces of software:
 
-- A fully fledged WiGLE scanning script, that scans all wifi channels and creats a WiGLE format CSV that can be uploaded to the WiGLE website.
+- [A fully fledged WiGLE scanning script](https://github.com/fridjemolk/ministumbler/blob/master/Ministumbler_WiGLE/Ministumbler_WiGLE.ino), that scans all wifi channels and creats a WiGLE format CSV that can be uploaded to the WiGLE website.
 - [A deprecated, more basic Arduino sketch](https://github.com/fridjemolk/ministumbler/blob/master/GPS_WiFi_XIAO_Serial_CSV/GPS_WiFi_XIAO_Serial_CSV.ino) that interfaces with the GPS module via the ESP32 fork of TinyGPSPlus and uses the Arduino WiFi libray to scan WiFi networks. The sketch will repeatedly output a line of CSV data over USB Serial detailing the current GPS location, date, time, and a list of WiFi SSIDs. 
 - [A simple python script](https://github.com/fridjemolk/ministumbler/blob/master/csv_write_test.py) that records the data received from the ESP32 over USB Serial and writes it to a CSV file. 
 
