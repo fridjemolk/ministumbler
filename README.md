@@ -1,43 +1,41 @@
 # ministumbler, a tiny ESP32 WiFi stumbling tool
 
-This repo contains arduino code, helper python scripts, and hardware information about my ESP32 based WiFi stumbler, designed with low cost, minimal size, and easy of asssembly in mind. It is currently based around the Seeed XIAO/Adafruit QT Py ecosystem. 
+This repo contains arduino code, helper python scripts, and KiCad and Gerber Files, and hardware information about my ESP32 based WiFi stumbler, designed with low cost, minimal size, and easy of asssembly in mind. It is currently based around the Seeed XIAO/Adafruit QT Py ecosystem.
 
-## Required Hardware
+As of 02/2026, this project exists in 3 different hardware configurations, all of which are based on a GNSS Module, a MicroSD card slot, and a Xiao ESP32-S3:
 
-### The minimum requirments for a WiFi stumbler are:
-- A way to scan for WiFi networks
-- A way to record GPS position 
-- A way to keep track of time accurately
-- A way to record all of the above data
-- A computer to connect all of the above components and process their data
+#### v0.2: A custom PCB backplane supporting each of the modules, designed to fit into [this case from the Pi Hut](https://thepihut.com/products/small-plastic-project-enclosure-weatherproof-with-clear-top). The KiCad and Gerber files are [available here.](https://github.com/fridjemolk/ministumbler/tree/master/ministumbler_weatherproof_case) 
+<img width="1606" height="1823" alt="photo_2026-02-06_13-54-47" src="https://github.com/user-attachments/assets/be31c994-0b6e-467f-973e-6ebb7ca41445" />
 
-### In this design, these requirements are met as simply as possible, as follows:
-- An ESP32 to be our computer, and to handle WiFi scanning.
-- A GPS module, for GPS positioning, as well as an accurate source of the current time.
-- A microSD card.
+#### v0.1: A custom flex PCB backplane, supporting each of the modules, designed for stealthy use in the pocket of a bag or inside clothing. The KiCad and Gerber files are [available here.](https://github.com/fridjemolk/ministumbler/tree/master/ministumbler_kicad)
+<img width="1572" height="1179" alt="IMG_6390" src="https://github.com/user-attachments/assets/4c9ac27b-28a2-4b43-88aa-4493546a0877" />
 
-### In the current design version, the Seeed XIAO/Adafruit QT Py ecosystem of boards are used for their small size, snap-together pin header based design, wide availability, and low cost. Currently, the following three boards are used:
+#### v0: A soldered-together stack of all three modules into a very compact rough cube shape. This was the initial prototype and is a little awkward to assemble as it requires deliberately not soldering certain pins for each module. 
+![photo_2024-10-22_11-17-53](https://github.com/user-attachments/assets/c75c636c-1c94-47f4-addd-2b2b55e19a51)
+
+All three hardware versions use the same firmware, with the same pin configurations, requireing the TX jumper pad to be CUT on the SD module and the A1 jumper pad SOLDERED. This firmware builds off the firmware created by [lozaning](https://github.com/lozaning) for their [Wifydra Project](https://github.com/lozaning/The_Wifydra), so credit to them for all their hard work in supporting the WiGLE CSV format and handling SD card file creation and management. 
+
+### Required Hardware
+
+#### In the current design version the following three boards are used:
 
 - [Seeed XIAO ESP32S3.](https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/) The S3 variant of the ESP32 has the added benefit of Bluetooth support, and of having a U.FL connector for an external antenna, opening up options for optimising reception.
 - [L76K GNSS Module for SeeedStudio XIAO.](https://wiki.seeedstudio.com/get_start_l76k_gnss/) A low-cost, TinyGPS++ compatible GPS module that has proven easy to use and quick to lock. Includes an active GPS antenna, also connected via a U.Fl connector
 - [Adafruit microSD Card BFF.](https://learn.adafruit.com/adafruit-microsd-card-bff) A basic microSD card breakout board from adafruit that directly connects an insterted microSD to the SPI pins on the ESP32S3. Since the ESP32S3 has an on-board 3.3v regulator and runs at a 3.3v logic level there is no need for any regulator or level shifter to interface with a microSD card.
 
-Due to confusion with the pinouts in the documentation of the above boards, the first attempt at assembling this hardware design led to an issue with the GPS RESET pin being the same as the MOSI (D10) pin of the ESP32, which was used to communicate with the microSD card. Due to this discrepancy not being discovered until after soldered assembly, and removal of the pin and replacement with a bodge wire failing due to the D10 pin burning off the board (my bad lol), the first tests of this hardware were conducted by instead streaming the WiFi, GPS, and time date out to a laptop over USB serial (see below). 
+The v0 hardware design leads to an issue with the GPS RESET pin being the same as the MOSI (D10) pin of the ESP32, which is used to communicate with the microSD card. It is therefor required to ensure that this pin from the ESP32 connects only to the SD board, as the GPS RESET pin is not needed. In fact, the GPS module only requires it's RX, TX, 5V, GND, and 3v3 pins to actually be connected to the ESP32. The 5V pin can also be omitted to disabled the green GPS PPS LED if required.
 
 ## Software
 
-### This repo, as it currently stands, contains two pieces of software:
+### This repo, as it currently stands, contains three pieces of software:
 
-- A basic Arduino sketch that interfaces with the GPS module via the ESP32 fork of TinyGPSPlus and uses the Arduino WiFi libray to scan WiFi networks. The sketch will repeatedly output a line of CSV data over USB Serial detailing the current GPS location, date, time, and a list of WiFi SSIDs. 
-- A simple python script that records the data received from the ESP32 over USB Serial and writes it to a CSV file. 
+- A fully fledged WiGLE scanning script, that scans all wifi channels and creats a WiGLE format CSV that can be uploaded to the WiGLE website.
+- [A deprecated, more basic Arduino sketch](https://github.com/fridjemolk/ministumbler/blob/master/GPS_WiFi_XIAO_Serial_CSV/GPS_WiFi_XIAO_Serial_CSV.ino) that interfaces with the GPS module via the ESP32 fork of TinyGPSPlus and uses the Arduino WiFi libray to scan WiFi networks. The sketch will repeatedly output a line of CSV data over USB Serial detailing the current GPS location, date, time, and a list of WiFi SSIDs. 
+- [A simple python script](https://github.com/fridjemolk/ministumbler/blob/master/csv_write_test.py) that records the data received from the ESP32 over USB Serial and writes it to a CSV file. 
 
-Once the hardware issues detailed above are resolved, an Arduino sketch will be available that will write the CSV file locally on the ESP32 onto a microSD.
+## KiCad Projects
 
-## KiCad Project
-
-The `ministumbler_kicad` directory contains a KiCad project with the designs for a flex PCB breakout designed to connect all three boards, GPS, ESP32, and microSD, via one small and flexible PCB so that the entire system may be concealed within a bag or clothes pocket or sewn into clothing or a bag's lining. When the first manufactured prototypes of this board have been received, this page will be update. 
-
-To open this project in KiCad, clone this repo or download the `ministumbler_kicad` directory and open the `ministumbler.kicad_pro` file from inside KiCad's GUI. 
+To open these projects in KiCad, clone this repo or download one of the kicad directories and open the `.kicad_pro` file located inside each folder from KiCad's GUI. 
 
 
 
