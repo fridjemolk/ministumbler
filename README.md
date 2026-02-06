@@ -2,10 +2,12 @@
 
 This repo contains arduino code, helper python scripts, KiCad and Gerber Files, and hardware information about my ESP32 based WiFi stumbler, designed with low cost, minimal size, and easy of asssembly in mind. It is currently based around the Seeed XIAO/Adafruit QT Py ecosystem.
 
+<img width="1606" height="1823" alt="photo_2026-02-06_13-54-47" src="https://github.com/user-attachments/assets/be31c994-0b6e-467f-973e-6ebb7ca41445" />
+
 As of 02/2026, this project exists in 3 different hardware configurations, all of which are based on a GNSS Module, a MicroSD card slot, and a Xiao ESP32-S3:
 
-#### v0.2: A custom PCB backplane supporting each of the modules, designed to fit into [this case from the Pi Hut](https://thepihut.com/products/small-plastic-project-enclosure-weatherproof-with-clear-top). The KiCad and Gerber files are [available here.](https://github.com/fridjemolk/ministumbler/tree/master/ministumbler_weatherproof_case) 
-<img width="1606" height="1823" alt="photo_2026-02-06_13-54-47" src="https://github.com/user-attachments/assets/be31c994-0b6e-467f-973e-6ebb7ca41445" />
+#### v0.2: A custom PCB backplane supporting each of the modules, plus a [LiPo battery](https://thepihut.com/products/2000mah-3-7v-lipo-battery) charged by the Xiao ESP32-S3's built-in charge circuit, designed to fit into [this case from the Pi Hut](https://thepihut.com/products/small-plastic-project-enclosure-weatherproof-with-clear-top). The KiCad and Gerber files are [available here.](https://github.com/fridjemolk/ministumbler/tree/master/ministumbler_weatherproof_case) 
+![photo_2026-01-19_00-50-52](https://github.com/user-attachments/assets/4a180b09-6744-44c3-ac56-591ac72c86cb)
 
 #### v0.1: A custom flex PCB backplane, supporting each of the modules, designed for stealthy use in the pocket of a bag or inside clothing. The KiCad and Gerber files are [available here.](https://github.com/fridjemolk/ministumbler/tree/master/ministumbler_kicad)
 <img width="1572" height="1179" alt="IMG_6390" src="https://github.com/user-attachments/assets/4c9ac27b-28a2-4b43-88aa-4493546a0877" />
