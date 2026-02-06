@@ -10,7 +10,8 @@ As of 02/2026, this project exists in 3 different hardware configurations, all o
 ![photo_2026-01-19_00-50-52](https://github.com/user-attachments/assets/4a180b09-6744-44c3-ac56-591ac72c86cb)
 
 #### v0.1: A custom flex PCB backplane, supporting each of the modules, designed for stealthy use in the pocket of a bag or inside clothing. The KiCad and Gerber files are [available here.](https://github.com/fridjemolk/ministumbler/tree/master/ministumbler_kicad)
-<img width="1572" height="1179" alt="IMG_6390" src="https://github.com/user-attachments/assets/4c9ac27b-28a2-4b43-88aa-4493546a0877" />
+<img width="1434" height="547" alt="IMG_6390" src="https://github.com/user-attachments/assets/90a6a6ae-ce02-425a-a5d4-51295b315baf" />
+
 
 #### v0: A soldered-together stack of all three modules into a very compact rough cube shape. This was the initial prototype and is a little awkward to assemble as it requires deliberately not soldering certain pins for each module. 
 ![photo_2024-10-22_11-17-53](https://github.com/user-attachments/assets/c75c636c-1c94-47f4-addd-2b2b55e19a51)
