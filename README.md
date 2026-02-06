@@ -1,6 +1,6 @@
 # ministumbler, a tiny ESP32 WiFi stumbling tool
 
-This repo contains arduino code, helper python scripts, and KiCad and Gerber Files, and hardware information about my ESP32 based WiFi stumbler, designed with low cost, minimal size, and easy of asssembly in mind. It is currently based around the Seeed XIAO/Adafruit QT Py ecosystem.
+This repo contains arduino code, helper python scripts, KiCad and Gerber Files, and hardware information about my ESP32 based WiFi stumbler, designed with low cost, minimal size, and easy of asssembly in mind. It is currently based around the Seeed XIAO/Adafruit QT Py ecosystem.
 
 As of 02/2026, this project exists in 3 different hardware configurations, all of which are based on a GNSS Module, a MicroSD card slot, and a Xiao ESP32-S3:
 
