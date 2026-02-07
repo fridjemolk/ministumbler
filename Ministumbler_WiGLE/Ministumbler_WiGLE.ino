@@ -60,7 +60,7 @@ int integerAltMeters = 0;
 //say how many macs we should keep in the buffer to compare for uniqueness
 #define mac_history_len 512
 
-const String wigleHeaderFileFormat = "WigleWifi-1.4,appRelease=2.26,model=v0.2,release=0.0.0,device=Ministumbler,display=3fea5e7,board=esp32,brand=Fridje";
+const String wigleHeaderFileFormat = "WigleWifi-1.4,appRelease=2.26,model=Ministumbler v0.2,release=0.0.1,device=Ministumbler,display=3fea5e7,board=esp32,brand=Fridje";
 char* log_col_names[LOG_COLUMN_COUNT] = {
   "MAC", "SSID", "AuthMode", "FirstSeen", "Channel", "RSSI", "CurrentLatitude", "CurrentLongitude", "AltitudeMeters", "AccuracyMeters", "Type"
 };
@@ -490,4 +490,5 @@ void writeToCSV(const uint8_t* incomingData, int len) {
   Serial.println();
   Serial.println();
   Serial.println();
+
 }
