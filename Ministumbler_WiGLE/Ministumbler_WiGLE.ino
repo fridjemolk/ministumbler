@@ -4,6 +4,8 @@
 #include <TinyGPS++.h>
 #include <SD.h>
 
+//TinyGPS++ library documentation is archived here from the developer's now-dead wordpress: https://web.archive.org/web/20250805002451/https://arduiniana.org/libraries/tinygpsplus/
+
 #define SD_FAT_TYPE 3
 #define SD_CS_PIN A1
 
@@ -492,3 +494,4 @@ void writeToCSV(const uint8_t* incomingData, int len) {
   Serial.println();
 
 }
+
