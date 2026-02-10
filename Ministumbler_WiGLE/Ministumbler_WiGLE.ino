@@ -105,10 +105,10 @@ void setup()
   }
   delay(50);
   Serial.println("Telling L76K which satellite mode to use...");
-	Serial.println();
-	delay(50);
-	GPS_Serial.print('$PCAS04,7*1E'); //Tell L76K to use GPS + BeiDou +  GLONASS, which is all the satellite types it supports + QZSS which is always enabled. This will give the best chance at a fix.
-	GPS_Serial.print('\r\n');
+  Serial.println();
+  delay(50);
+  GPS_Serial.print('$PCAS04,7*1E'); //Tell L76K to use GPS + BeiDou +  GLONASS, which is all the satellite types it supports + QZSS which is always enabled. This will give the best chance at a fix.
+  GPS_Serial.print('\r\n');
   //Calculate checksum with https://www.meme.au/nmea-checksum.html
   delay(250);
   
@@ -503,6 +503,7 @@ void writeToCSV(const uint8_t* incomingData, int len) {
   Serial.println();
 
 }
+
 
 
 
