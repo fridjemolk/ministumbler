@@ -5,6 +5,7 @@
 #include <SD.h>
 
 //TinyGPS++ library documentation is archived here from the developer's now-dead wordpress: https://web.archive.org/web/20250805002451/https://arduiniana.org/libraries/tinygpsplus/
+//Quectel L76K GPS Module Protocal Documentation is available here: https://raw.githubusercontent.com/Seeed-Projects/Seeed_L76K-GNSS_for_XIAO/fb74b715224e0ac153c3884e578ee8e024ed8946/docs/Quectel_L76K_GNSS_Protocol_Specification_V1.1.pdf
 
 #define SD_FAT_TYPE 3
 #define SD_CS_PIN A1
@@ -494,4 +495,5 @@ void writeToCSV(const uint8_t* incomingData, int len) {
   Serial.println();
 
 }
+
 
