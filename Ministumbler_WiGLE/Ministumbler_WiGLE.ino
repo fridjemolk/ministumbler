@@ -115,12 +115,14 @@ void setup()
   Serial.print("Initializing SD card...");
 
   if (!SD.begin(SD_CS_PIN)) {
-    Serial.println("initialization failed! Check if a card is inserted, and if not, check solder joints on SD module");
+    Serial.println("initialization failed! Check if a card is inserted, and if not, check solder joints on SD module.");
     while(true){
       delay(1);
     }
+  } else {
+    Serial.print("SD and ");
   }
-  Serial.println("SD and GPS initialization done.");
+  Serial.println("GPS initialization done.");
 
   updateFileName();
   printHeader();
@@ -136,88 +138,7 @@ void loop() {
   smartDelay(50);
   if (gps.location.isValid() && gps.date.isValid() && gps.time.isValid() && (gps.time.hour() > 0 || gps.time.minute() > 0 || gps.time.second() > 0) && gps.date.year() > 2000){
     print_GPS_date_time();
-    char Buf[50];
-    char bufBSSID[64];
-    char BufEnc[50];
-    if ((millis() - lastTime) > timerDelay) {
-      // Set values to send
-
-      //myData.b = random(1,20);
-      //myData.c = 1.2;
-      int n = WiFi.scanNetworks();
-      if (n == 0) {
-        Serial.println("No networks found");
-        Serial.println("No networks found");
-      } else {
-        for (int8_t i = 0; i < n; i++) {
-          //delay(10);
-          if (seen_mac(WiFi.BSSID(i))) {
-            Serial.println("We've already seen it");
-            //BSSIDchar = WiFi.BSSID(i);
-            //BSSIDchar.toCharArray(bufBSSID, 64);
-            //strcpy(myData.bssid, Buf);
-            //Serial.println(myData.bssid);
-            continue;
-          }
-          Serial.println("We havent seen it");
-          String MacString = WiFi.BSSIDstr(i).c_str();
-          //myData.bssid = MacString;
-          MacString.toCharArray(bufBSSID, 64);
-          strcpy(myData.bssid, bufBSSID);
-          Serial.println(myData.bssid);
-          //myData.bssid = WiFi.BSSID(i);
-          //Serial.print("MyData.bssid: ");
-
-          //Serial.println(myData.bssid);
-          String AP = WiFi.SSID(i);
-          AP.toCharArray(Buf, 50);
-          strcpy(myData.ssid, Buf);
-          Serial.print("SSID: ");
-          Serial.println(myData.ssid);
-          //String ENC = security_int_to_string(WiFi.encryptionType(i));
-
-          //ENC.toCharArray(BufEnc, 32);
-          //strcpy(myData.encryptionType, BufEnc);
-          //myData.encryptionType = authtype;
-          switch (WiFi.encryptionType(i)) {
-            case WIFI_AUTH_OPEN:
-              EncTy = "Open";
-              break;
-            case WIFI_AUTH_WEP:
-              EncTy = "WEP";
-              break;
-            case WIFI_AUTH_WPA_PSK:
-              EncTy = "WPA PSK";
-              break;
-            case WIFI_AUTH_WPA2_PSK:
-              EncTy = "WPA2 PSK";
-              break;
-            case WIFI_AUTH_WPA_WPA2_PSK:
-              EncTy = "WPA/WPA2 PSK";
-              break;
-            case WIFI_AUTH_WPA2_ENTERPRISE:
-              EncTy = "WPA2 Enterprise";
-              break;
-            default:
-              EncTy = "Unknown";
-              break;
-          }
-          EncTy.toCharArray(BufEnc, 16);
-          strcpy(myData.encryptionType, BufEnc);
-          Serial.print("Encryption: ");
-          Serial.println(myData.encryptionType);
-
-          myData.channel = WiFi.channel(i);
-          myData.rssi = WiFi.RSSI(i);
-          save_mac(WiFi.BSSID(i));
-          writeToCSV((uint8_t*)&myData, sizeof(myData));
-          //digitalWrite(2, LOW);
-          delay(200);
-          //digitalWrite(2, HIGH);
-        }
-        lastTime = millis();
-      }
-    }
+    scanWiFi();
   } else {
     Serial.println("Waiting for GPS Lock...");
     while (GPSSerial.available())
@@ -265,6 +186,93 @@ void print_GPS_date_time(){
     if (gps.time.centisecond() < 10) Serial.print(F("0"));
     Serial.print(gps.time.centisecond());
     Serial.println(".");
+}
+
+void scanWiFi(){
+  char Buf[50];
+  char bufBSSID[64];
+  char BufEnc[50];
+  if ((millis() - lastTime) > timerDelay) {
+    // Set values to send
+
+    //myData.b = random(1,20);
+    //myData.c = 1.2;
+    //sytanx thus: scanNetworks(bool async, bool show_hidden, bool passive, uint32_t max_ms_per_chan, uint8_t channel)
+    int n = WiFi.scanNetworks(false,true,true); //passive scan with hidden networks on all channels and default dwell time
+    //int n = WiFi.scanNetworks(); //basic scan, promiscuous 
+    if (n == 0) {
+      Serial.println("No networks found");
+      Serial.println("No networks found");
+    } else {
+      for (int8_t i = 0; i < n; i++) {
+        //delay(10);
+        if (seen_mac(WiFi.BSSID(i))) {
+          Serial.println("We've already seen it");
+          //BSSIDchar = WiFi.BSSID(i);
+          //BSSIDchar.toCharArray(bufBSSID, 64);
+          //strcpy(myData.bssid, Buf);
+          //Serial.println(myData.bssid);
+          continue;
+        }
+        Serial.println("We havent seen it");
+        String MacString = WiFi.BSSIDstr(i).c_str();
+        //myData.bssid = MacString;
+        MacString.toCharArray(bufBSSID, 64);
+        strcpy(myData.bssid, bufBSSID);
+        Serial.println(myData.bssid);
+        //myData.bssid = WiFi.BSSID(i);
+        //Serial.print("MyData.bssid: ");
+
+        //Serial.println(myData.bssid);
+        String AP = WiFi.SSID(i);
+        AP.toCharArray(Buf, 50);
+        strcpy(myData.ssid, Buf);
+        Serial.print("SSID: ");
+        Serial.println(myData.ssid);
+        //String ENC = security_int_to_string(WiFi.encryptionType(i));
+
+        //ENC.toCharArray(BufEnc, 32);
+        //strcpy(myData.encryptionType, BufEnc);
+        //myData.encryptionType = authtype;
+        switch (WiFi.encryptionType(i)) {
+          case WIFI_AUTH_OPEN:
+            EncTy = "Open";
+            break;
+          case WIFI_AUTH_WEP:
+            EncTy = "WEP";
+            break;
+          case WIFI_AUTH_WPA_PSK:
+            EncTy = "WPA PSK";
+            break;
+          case WIFI_AUTH_WPA2_PSK:
+            EncTy = "WPA2 PSK";
+            break;
+          case WIFI_AUTH_WPA_WPA2_PSK:
+            EncTy = "WPA/WPA2 PSK";
+            break;
+          case WIFI_AUTH_WPA2_ENTERPRISE:
+            EncTy = "WPA2 Enterprise";
+            break;
+          default:
+            EncTy = "Unknown";
+            break;
+        }
+        EncTy.toCharArray(BufEnc, 16);
+        strcpy(myData.encryptionType, BufEnc);
+        Serial.print("Encryption: ");
+        Serial.println(myData.encryptionType);
+
+        myData.channel = WiFi.channel(i);
+        myData.rssi = WiFi.RSSI(i);
+        save_mac(WiFi.BSSID(i));
+        writeToCSV((uint8_t*)&myData, sizeof(myData));
+        //digitalWrite(2, LOW);
+        delay(200);
+        //digitalWrite(2, HIGH);
+      }
+      lastTime = millis();
+    }
+  }
 }
 
 void save_mac(unsigned char* mac) {
@@ -501,7 +509,6 @@ void writeToCSV(const uint8_t* incomingData, int len) {
   Serial.println();
   Serial.println();
   Serial.println();
-
 }
 
 
