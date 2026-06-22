@@ -24,7 +24,7 @@ All three hardware versions currently [use the same firmware](https://github.com
 
 #### In the current design version the following three boards are used:
 
-- [Seeed XIAO ESP32S3.](https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/) The S3 variant of the ESP32 has the added benefit of Bluetooth support, and of having a U.FL connector for an external antenna, opening up options for optimising reception.
+- [Seeed XIAO ESP32S3.](https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/) The S3 variant of the ESP32 has the added benefit of Bluetooth support, and of having a U.FL connector for an external antenna, opening up options for optimising reception. Alternatively, the [Seeed XIAO ESP32C5](https://www.seeedstudio.com/Seeed-Studio-XIAO-ESP32C5-p-6609.html) can be used if 5GHz WiFi support is required, as both boards use the same pinout, however 5GHz is not yet supported by the firmware in this repo.
 - [L76K GNSS Module for SeeedStudio XIAO.](https://wiki.seeedstudio.com/get_start_l76k_gnss/) A low-cost, TinyGPS++ compatible GPS module that has proven easy to use and quick to lock. Includes an active GPS antenna, also connected via a U.Fl connector
 - [Adafruit microSD Card BFF.](https://learn.adafruit.com/adafruit-microsd-card-bff) A basic microSD card breakout board from adafruit that directly connects an insterted microSD to the SPI pins on the ESP32S3. Since the ESP32S3 has an on-board 3.3v regulator and runs at a 3.3v logic level there is no need for any regulator or level shifter to interface with a microSD card.
 
